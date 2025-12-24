@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BankDash. ATM</title>
+    <link rel="icon" href="./assets/images/myfavico_icon.png" type="img/png" />
+    <link rel="stylesheet" href="./assets/css/index.css" type="text/css" />
+    <script src="./assets/js/script.js" defer></script>
+  </head>
+  <body>
+    <header class="head-sec">
+      <div class="head-sec__logo">
+        <img
+          class="head-sec__img"
+          src="./assets//images/myfavico_icon.png"
+          alt="logo-img"
+        />
+        <h1 class="head-sec__title">BankDash</h1>
+      </div>
+      <div class="head-sec__date">
+        <p id="date"></p>
+        <p id="time"></p>
+      </div>
+    </header>
+    <main class="main-sec">
+      <form
+        id="pin-form"
+        class="pin-form"
+        aria-label="Enter Personal Identification Number"
+      >
+        <fieldset class="pin-form__inp">
+          <legend class="pin-form__inp-head">Enter PIN</legend>
+          <div class="pin-form__input-wrapper">
+            <input
+              class="pin-form__input"
+              type="password"
+              data-index="0"
+              maxlength="1"
+              readonly
+            />
+            <input
+              class="pin-form__input"
+              type="password"
+              data-index="1"
+              maxlength="1"
+              readonly
+            />
+            <input
+              class="pin-form__input"
+              type="password"
+              data-index="2"
+              maxlength="1"
+              readonly
+            />
+            <input
+              class="pin-form__input"
+              type="password"
+              data-index="3"
+              maxlength="1"
+              readonly
+            />
+          </div>
+          <p id="pin-form__error" class="pin-form__error" role="alert"></p>
+        </fieldset>
+        <div id="keypad" class="enter-pin__numbers">
+          <div class="enter-pin__numbers--col1">
+            <div class="enter-pin__num-btn-row">
+              <button type="button" class="enter-pin__num-btn" value="1">
+                1
+              </button>
+              <button type="button" class="enter-pin__num-btn" value="2">
+                2
+              </button>
+              <button type="button" class="enter-pin__num-btn" value="3">
+                3
+              </button>
+            </div>
+            <div class="enter-pin__num-btn-row">
+              <button type="button" class="enter-pin__num-btn" value="4">
+                4
+              </button>
+              <button type="button" class="enter-pin__num-btn" value="5">
+                5
+              </button>
+              <button type="button" class="enter-pin__num-btn" value="6">
+                6
+              </button>
+            </div>
+            <div class="enter-pin__num-btn-row">
+              <button type="button" class="enter-pin__num-btn" value="7">
+                7
+              </button>
+              <button type="button" class="enter-pin__num-btn" value="8">
+                8
+              </button>
+              <button type="button" class="enter-pin__num-btn" value="9">
+                9
+              </button>
+            </div>
+            <div class="enter-pin__num-btn-row">
+              <button
+                type="button"
+                class="enter-pin__num-btn--disabled"
+                disabled
+              ></button>
+              <button type="button" class="enter-pin__num-btn" value="0">
+                0
+              </button>
+              <button
+                class="enter-pin__num-btn--disabled"
+                type="button"
+                disabled
+              ></button>
+            </div>
+          </div>
+          <div class="enter-pin__numbers--col2">
+            <button
+              type="button"
+              class="enter-pin__action-btn enter-pin__cancel-btn"
+              data-action="cancel"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="enter-pin__action-btn enter-pin__correct-btn"
+              data-action="correction"
+            >
+              Correction
+            </button>
+            <button
+              type="submit"
+              class="enter-pin__action-btn enter-pin__submit-btn"
+            >
+              OK
+            </button>
+            <button
+              type="button"
+              class="enter-pin__action-btn"
+              disabled
+            ></button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

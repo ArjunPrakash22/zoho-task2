@@ -1,0 +1,25 @@
+# IDE specific files
+.idea/
+.vscode/
+*.suo
+*.user
+*.APS
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Compiled output and build artifacts
+/build
+/dist
+*.pyc
+*.o
+*.log
+
+# Sensitive files
+.env
+config.secret.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
