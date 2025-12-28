@@ -16,54 +16,55 @@
           src="./assets//images/myfavico_icon.png"
           alt="logo-img"
         />
-        <h1 class="head-sec__title">BankDash</h1>
+        <h1 class="head-sec__title">BankDash.</h1>
       </div>
       <div class="head-sec__date">
         <p id="date"></p>
         <p id="time"></p>
       </div>
     </header>
+
     <main class="main-sec">
       <form
         id="pin-form"
         class="pin-form"
         aria-label="Enter Personal Identification Number"
       >
-        <fieldset class="pin-form__inp">
-          <legend class="pin-form__inp-head">Enter PIN</legend>
+        <div class="pin-form__inp">
+          <label for="pin-form__input" class="pin-form__inp-head"
+            >Enter your four digit PIN</label
+          >
+
           <div class="pin-form__input-wrapper">
+            <div class="pin-form__input-bg" aria-hidden="true"></div>
+            <div class="pin-form__input-bg" aria-hidden="true"></div>
+            <div class="pin-form__input-bg" aria-hidden="true"></div>
+            <div class="pin-form__input-bg" aria-hidden="true"></div>
             <input
+              id="pin-form__input"
               class="pin-form__input"
               type="password"
-              data-index="0"
-              maxlength="1"
-              readonly
-            />
-            <input
-              class="pin-form__input"
-              type="password"
-              data-index="1"
-              maxlength="1"
-              readonly
-            />
-            <input
-              class="pin-form__input"
-              type="password"
-              data-index="2"
-              maxlength="1"
-              readonly
-            />
-            <input
-              class="pin-form__input"
-              type="password"
-              data-index="3"
-              maxlength="1"
+              inputmode="numeric"
+              maxlength="4"
               readonly
             />
           </div>
+          <p
+            id="pin-form__status"
+            class="pin-form__status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
+
           <p id="pin-form__error" class="pin-form__error" role="alert"></p>
-        </fieldset>
-        <div id="keypad" class="enter-pin__numbers">
+        </div>
+
+        <div
+          id="keypad"
+          role="group"
+          aria-label="PIN keypad"
+          class="enter-pin__numbers"
+        >
           <div class="enter-pin__numbers--col1">
             <div class="enter-pin__num-btn-row">
               <button type="button" class="enter-pin__num-btn" value="1">
@@ -99,19 +100,9 @@
               </button>
             </div>
             <div class="enter-pin__num-btn-row">
-              <button
-                type="button"
-                class="enter-pin__num-btn--disabled"
-                disabled
-              ></button>
               <button type="button" class="enter-pin__num-btn" value="0">
                 0
               </button>
-              <button
-                class="enter-pin__num-btn--disabled"
-                type="button"
-                disabled
-              ></button>
             </div>
           </div>
           <div class="enter-pin__numbers--col2">
@@ -130,16 +121,13 @@
               Correction
             </button>
             <button
+              id="submit-btn"
               type="submit"
               class="enter-pin__action-btn enter-pin__submit-btn"
+              disabled
             >
               OK
             </button>
-            <button
-              type="button"
-              class="enter-pin__action-btn"
-              disabled
-            ></button>
           </div>
         </div>
       </form>
