@@ -147,7 +147,6 @@ form.addEventListener("submit", (e) => {
     failedAttempts++;
     if (inputs.value.length !== 4) {
       error.textContent = "Please enter the 4 digits";
-      failedAttempts++;
       return;
     } else {
       initializePinForm();
