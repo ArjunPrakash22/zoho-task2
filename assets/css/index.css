@@ -17,7 +17,13 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   background: linear-gradient(
     90deg,
@@ -37,8 +43,12 @@ body {
   justify-content: space-between;
 }
 
-.head-sec__title {
+.head-sec__title,
+.enter-pin__numbers {
   font-family: mont;
+}
+
+.head-sec__title {
   font-size: 1.7rem;
   color: #343c6a;
   font-weight: 900;
@@ -54,24 +64,23 @@ body {
 }
 
 .head-sec__date {
-  font-family: "inter";
   font-weight: 600;
   letter-spacing: 1px;
 }
 
 .main-sec {
-  padding: 100px;
+  margin: auto;
 }
 
 .pin-form {
   width: 100%;
+  max-width: 1270px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  gap: 10px;
+  gap: 80px;
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0);
-  border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(4.7px);
   -webkit-backdrop-filter: blur(4.7px);
@@ -99,8 +108,14 @@ body {
   font-size: 2.5rem;
 }
 
-.pin-form__inp-head {
+.head-sec__date,
+.pin-form__inp-head,
+.pin-form__error,
+.pin-form__status {
   font-family: inter;
+}
+
+.pin-form__inp-head {
   font-size: 1.875rem;
 }
 
@@ -112,11 +127,11 @@ body {
   color: transparent;
   caret-color: transparent;
   width: 100%;
+  height: 100%;
 }
 
 .pin-form__error,
 .pin-form__status {
-  font-family: inter;
   font-size: 1.3rem;
   text-align: center;
   width: 100%;
@@ -126,6 +141,7 @@ body {
 .pin-form__error {
   color: red;
   white-space: pre-line;
+  margin-top: 10px;
 }
 
 .pin-form__status {
@@ -136,7 +152,6 @@ body {
 .enter-pin__numbers {
   display: flex;
   gap: 20px;
-  font-family: mont;
 }
 
 .enter-pin__numbers--col1 {
@@ -160,7 +175,8 @@ body {
 
 .enter-pin__num-btn,
 .enter-pin__num-btn--disabled {
-  padding: 30px 40px;
+  height: 100px;
+  width: 100px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   border-radius: 50%;
@@ -168,7 +184,6 @@ body {
   outline: none;
   font-size: 1.8rem;
   cursor: pointer;
-
   background: rgba(255, 255, 255, 0);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5.1px);
@@ -185,8 +200,8 @@ body {
   cursor: pointer;
 }
 
-.enter-pin__action-btn:hover{
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.enter-pin__action-btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .enter-pin__num-btn:hover {
@@ -200,16 +215,16 @@ body {
   color: #fff;
 }
 
-.enter-pin__cancel-btn:hover{
-    background: #FF0000;
+.enter-pin__cancel-btn:hover {
+  background: #ff0000;
 }
 
 .enter-pin__correct-btn {
   background: #e0c302;
 }
 
-.enter-pin__correct-btn:hover{
-    background: #FFE100;
+.enter-pin__correct-btn:hover {
+  background: #ffe100;
 }
 
 .enter-pin__submit-btn {
@@ -220,9 +235,40 @@ body {
 .enter-pin__submit-btn:disabled {
   background: #b3b3b3;
   cursor: not-allowed;
-  color: #fff;
 }
 
 .enter-pin__submit-btn:disabled:hover {
   box-shadow: none;
+}
+
+
+/* menu page */
+
+.menu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 30px 10px;
+}
+
+.menu__head,
+.menu__list{
+    font-family: inter;
+}
+
+.menu__head{
+    margin-bottom: 20px;
+}
+
+.menu__list{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 80px;
+}
+
+.menu__item{
+    list-style: none;
 }

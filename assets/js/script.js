@@ -15,62 +15,45 @@ const numbers = document.getElementById("keypad");
 const form = document.getElementById("pin-form");
 const error = document.getElementById("pin-form__error");
 const boxes = document.querySelectorAll(".pin-form__input-bg");
-const status = document.getElementById("pin-form__status");
-const submitBtn = document.getElementById("submit-btn");
+const inputStatus = document.getElementById("pin-form__status");
 const btns = document.querySelectorAll(".enter-pin__num-btn");
 
 let isLocked = false;
 let failedAttempts = 0;
 let lockTimer = null;
 
-let hasFocusMoved = false;
-
 function initializePinForm() {
   inputs.value = "";
-  submitBtn.disabled = true;
   error.textContent = "";
-  status.textContent = "";
-  hasFocusMoved = false;
+  inputStatus.textContent = "";
 
   boxes.forEach((box) => {
     box.textContent = "";
   });
-
-  inputs.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
 initializePinForm();
 
-numbers.addEventListener("click", (e) => {
-  const event = e.target;
+function displayInput() {
+  boxes.forEach((box, i) => {
+    box.textContent = inputs.value[i] >= 0 ? "*" : "";
+  });
+}
 
-  const key = event.value;
-  const action = event.dataset.action;
-
-  if (inputs.value.length < 4 || action === "correction") {
-    if (key) {
-      inputs.value += key;
-    } else if (action) {
-      inputs.value = inputs.value.slice(0, -1);
-    }
-    inputs.dispatchEvent(new Event("input", { bubbles: true }));
+function displayStatus(len) {
+  if (len > 0 && len < 4) {
+    inputStatus.textContent = `${len} of 4 digits entered`;
+    error.textContent = "";
+  } else if (len === 4) {
+    inputStatus.textContent = "Press OK to continue";
+  } else if (len === 0) {
+    inputStatus.textContent = "";
   }
-
-  if (action && action === "cancel") {
-    resetForm();
-    alert("transaction cancelled");
-  }
-});
-
-function resetForm() {
-  initializePinForm();
 }
 
 function lockPinForm() {
   isLocked = true;
-
   inputs.disabled = true;
-  submitBtn.disabled = true;
 
   btns.forEach((btn) => {
     btn.disabled = true;
@@ -78,15 +61,13 @@ function lockPinForm() {
 
   error.textContent = "Too many failed attempts,\n Try Again after a minute";
 
-  lockTimer = setTimeout(unlockPinForm, 5000);
+  lockTimer = setTimeout(unlockPinForm, 20000);
 }
 
 function unlockPinForm() {
   isLocked = false;
   failedAttempts = 0;
-
   inputs.disabled = false;
-  submitBtn.disabled = false;
 
   btns.forEach((btn) => {
     btn.disabled = false;
@@ -96,47 +77,83 @@ function unlockPinForm() {
   initializePinForm();
 }
 
-inputs.addEventListener("input", () => {
-  let value = inputs.value.replace(/\D/g, "").slice(0, 4);
-  inputs.value = value;
 
-  boxes.forEach((box, i) => {
-    box.textContent = inputs.value[i] ? "*" : "";
-  });
 
-  if (value.length > 0 && value.length < 4) {
-    status.textContent = `${value.length} of 4 digits entered`;
-    submitBtn.disabled = true;
-    error.textContent = "";
-    hasFocusMoved = false;
-  } else if (value.length === 4) {
-    status.textContent = "Press OK to continue";
-    submitBtn.disabled = false;
-    if(!hasFocusMoved){
-        submitBtn.focus();
-        hasFocusMoved = true;
+function handleInput({ key, action }) {
+  if (inputs.value.length < 4 || action === "correction") {
+    if (key) {
+      inputs.value += key;
+    } else if (action) {
+      inputs.value = inputs.value.slice(0, -1);
     }
-  } else if (value.length === 0) {
-    status.textContent = "";
-    submitBtn.disabled = true;
-    hasFocusMoved = false;
+
+    displayInput();
+
+    let len = inputs.value.length;
+    displayStatus(len);
+  }
+
+  if (action && action === "cancel") {
+    initializePinForm();
+    unlockPinForm();
+    alert("transaction cancelled");
+  }
+}
+
+numbers.addEventListener("click", (e) => {
+  if (!isLocked) {
+    const key = e.target.value;
+    const action = e.target.dataset.action;
+
+    handleInput({
+      key: key,
+      action: action,
+    });
+  }
+  inputs.focus();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (!isLocked) {
+    if (/^[0-9]$/.test(e.key)) {
+      handleInput({ key: e.key });
+    } else if (e.key === "Backspace") {
+      handleInput({ action: "correction" });
+    } else if (e.altKey && e.key === "Escape") {
+      handleInput({ action: "cancel" });
+    } else if (e.key === "Enter") {
+      form.requestSubmit();
+    }
+  }
+});
+
+inputs.addEventListener("beforeinput", (e) => {
+  if (
+    e.inputType.startsWith("insert") ||
+    e.inputType === "deleteContentBackward"
+  ) {
+    e.preventDefault();
   }
 });
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   if (inputs.value.length === 4 && inputs.value === "1234") {
-    status.textContent = "Pin Accepted. redirecting...";
+    inputStatus.textContent = "Pin Accepted. redirecting...";
     setTimeout(() => {
-      window.location.href = "./pages/menu.html";
-    }, 1000);
+      window.location.replace("./pages/menu.html");
+    }, 3000);
   } else {
     failedAttempts++;
-    resetForm();
-    error.textContent = "Oops! invalid pin,\n Enter Correct pin";
-
-    if (failedAttempts >= 3) {
-      lockPinForm();
+    if (inputs.value.length !== 4) {
+      error.textContent = "Please enter the 4 digits";
+      return;
+    } else {
+      initializePinForm();
+      error.textContent = "Oops! invalid pin,\n Enter Correct pin";
+      if (failedAttempts >= 3) {
+        lockPinForm();
+      }
     }
   }
 });
