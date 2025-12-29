@@ -34,6 +34,51 @@ function initializePinForm() {
 
 initializePinForm();
 
+function displayInput() {
+  boxes.forEach((box, i) => {
+    box.textContent = inputs.value[i] >= 0 ? "*" : "";
+  });
+}
+
+function displayStatus(len) {
+  if (len > 0 && len < 4) {
+    inputStatus.textContent = `${len} of 4 digits entered`;
+    error.textContent = "";
+  } else if (len === 4) {
+    inputStatus.textContent = "Press OK to continue";
+  } else if (len === 0) {
+    inputStatus.textContent = "";
+  }
+}
+
+function lockPinForm() {
+  isLocked = true;
+  inputs.disabled = true;
+
+  btns.forEach((btn) => {
+    btn.disabled = true;
+  });
+
+  error.textContent = "Too many failed attempts,\n Try Again after a minute";
+
+  lockTimer = setTimeout(unlockPinForm, 20000);
+}
+
+function unlockPinForm() {
+  isLocked = false;
+  failedAttempts = 0;
+  inputs.disabled = false;
+
+  btns.forEach((btn) => {
+    btn.disabled = false;
+  });
+
+  error.textContent = "";
+  initializePinForm();
+}
+
+
+
 function handleInput({ key, action }) {
   if (inputs.value.length < 4 || action === "correction") {
     if (key) {
@@ -81,49 +126,6 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
-
-function displayInput() {
-  boxes.forEach((box, i) => {
-    box.textContent = inputs.value[i] >= 0 ? "*" : "";
-  });
-}
-
-function displayStatus(len) {
-  if (len > 0 && len < 4) {
-    inputStatus.textContent = `${len} of 4 digits entered`;
-    error.textContent = "";
-  } else if (len === 4) {
-    inputStatus.textContent = "Press OK to continue";
-  } else if (len === 0) {
-    inputStatus.textContent = "";
-  }
-}
-
-function lockPinForm() {
-  isLocked = true;
-  inputs.disabled = true;
-
-  btns.forEach((btn) => {
-    btn.disabled = true;
-  });
-
-  error.textContent = "Too many failed attempts,\n Try Again after a minute";
-
-  lockTimer = setTimeout(unlockPinForm, 20000);
-}
-
-function unlockPinForm() {
-  isLocked = false;
-  failedAttempts = 0;
-  inputs.disabled = false;
-
-  btns.forEach((btn) => {
-    btn.disabled = false;
-  });
-
-  error.textContent = "";
-  initializePinForm();
-}
 
 inputs.addEventListener("beforeinput", (e) => {
   if (
