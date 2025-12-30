@@ -132,26 +132,22 @@ body {
   caret-color: transparent;
   width: 100%;
   height: 100%;
+  z-index: -1;
 }
 
-.pin-form__error,
+.pin-form__input:focus{
+    border: 1px solid black;
+}
+
 .pin-form__status {
   font-size: 1.3rem;
   text-align: center;
   width: 100%;
   height: 20px;
-}
-
-.pin-form__error {
-  color: red;
+  margin-top: 20px ;
   white-space: pre-line;
-  margin-top: 10px;
 }
 
-.pin-form__status {
-  color: green;
-  margin-top: 20px;
-}
 
 .enter-pin__numbers {
   display: flex;
