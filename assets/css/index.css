@@ -108,6 +108,10 @@ body {
   font-size: 2.5rem;
 }
 
+.pin-form__input-bg.is-active {
+    border-bottom: 4px solid #005fcc;
+}
+
 .head-sec__date,
 .pin-form__inp-head,
 .pin-form__error,

@@ -17,6 +17,7 @@ const error = document.getElementById("pin-form__error");
 const boxes = document.querySelectorAll(".pin-form__input-bg");
 const inputStatus = document.getElementById("pin-form__status");
 const btns = document.querySelectorAll(".enter-pin__num-btn");
+const submitBtn = document.getElementById('submit-btn');
 
 let isLocked = false;
 let failedAttempts = 0;
@@ -29,14 +30,18 @@ function initializePinForm() {
 
   boxes.forEach((box) => {
     box.textContent = "";
+    box.classList.remove("is-active");
   });
+
+  boxes[0].classList.add("is-active")
 }
 
 initializePinForm();
 
-function displayInput() {
+function displayInput(len) {
   boxes.forEach((box, i) => {
     box.textContent = inputs.value[i] >= 0 ? "*" : "";
+    box.classList.toggle("is-active",i==len && len<4);
   });
 }
 
@@ -87,9 +92,8 @@ function handleInput({ key, action }) {
       inputs.value = inputs.value.slice(0, -1);
     }
 
-    displayInput();
-
     let len = inputs.value.length;
+    displayInput(len);
     displayStatus(len);
   }
 
@@ -104,13 +108,14 @@ numbers.addEventListener("click", (e) => {
   if (!isLocked) {
     const key = e.target.value;
     const action = e.target.dataset.action;
+    console.log(key)
 
     handleInput({
       key: key,
       action: action,
     });
   }
-  inputs.focus();
+//   inputs.focus();
 });
 
 document.addEventListener("keydown", (e) => {
@@ -119,7 +124,7 @@ document.addEventListener("keydown", (e) => {
       handleInput({ key: e.key });
     } else if (e.key === "Backspace") {
       handleInput({ action: "correction" });
-    } else if (e.altKey && e.key === "Escape") {
+    } else if (e.key === "Escape") {
       handleInput({ action: "cancel" });
     } else if (e.key === "Enter") {
       form.requestSubmit();
@@ -138,6 +143,7 @@ inputs.addEventListener("beforeinput", (e) => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  submitBtn.disabled = true;
   if (inputs.value.length === 4 && inputs.value === "1234") {
     inputStatus.textContent = "Pin Accepted. redirecting...";
     setTimeout(() => {
@@ -145,6 +151,7 @@ form.addEventListener("submit", (e) => {
     }, 3000);
   } else {
     failedAttempts++;
+    submitBtn.disabled=false;
     if (inputs.value.length !== 4) {
       error.textContent = "Please enter the 4 digits";
       return;
